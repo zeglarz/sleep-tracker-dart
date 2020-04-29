@@ -105,31 +105,53 @@ class _AddSleepPageState extends State<AddSleepPage> {
               padding:
                   const EdgeInsets.symmetric(horizontal: 25.0, vertical: 16.0),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Container(
-                    child: TextField(
-                      enabled: false,
-                      controller: _dateController,
-                      obscureText: false,
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        labelText: 'Date and time',
-                        icon: Icon(
-                          FontAwesomeIcons.calendarAlt,
-                          color: Colors.blue.shade900,
-                        ),
+                    child: Text(
+                      'Date and time',
+                      style: TextStyle(
+                        color: Colors.blue.shade900,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                      ),
+                    ),
+                    margin: EdgeInsets.only(left: 48),
+                  ),
+                  TextField(
+                    enabled: false,
+                    controller: _dateController,
+                    obscureText: false,
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      icon: Icon(
+                        FontAwesomeIcons.calendarAlt,
+                        color: Colors.blue.shade900,
+                        size: 30,
                       ),
                     ),
                   ),
                   SizedBox(
-                    height: 20,
+                    height: 35,
                     width: double.infinity,
                     child: Divider(
                       thickness: 1,
                       color: Colors.grey.shade400,
                     ),
                   ),
+                  Container(
+                    child: Text(
+                      'Sleep Type',
+                      style: TextStyle(
+                        color: Colors.blue.shade900,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                      ),
+                    ),
+                    margin: EdgeInsets.only(left: 48),
+                  ),
                   DropdownButtonFormField(
+                    hint: Text('Nights, nap, etc'),
                     onChanged: (value) {
                       setState(() => sleepType = value);
                     },
@@ -139,33 +161,43 @@ class _AddSleepPageState extends State<AddSleepPage> {
                         .toList(),
                     decoration: InputDecoration(
                       border: InputBorder.none,
-                      labelText: 'Sleep Type',
                       labelStyle: TextStyle(fontSize: 12),
                       hintText: 'Nights, nap, etc',
                       icon: Icon(
                         FontAwesomeIcons.moon,
                         color: Colors.blue.shade900,
+                        size: 30,
                       ),
                     ),
                   ),
                   SizedBox(
-                    height: 20,
+                    height: 35,
                     width: double.infinity,
                     child: Divider(
                       thickness: 1,
                       color: Colors.grey.shade400,
                     ),
                   ),
+                  Container(
+                    child: Text(
+                      'Sleep Duration',
+                      style: TextStyle(
+                        color: Colors.blue.shade900,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                      ),
+                    ),
+                    margin: EdgeInsets.only(left: 48),
+                  ),
                   Center(
                     child: GestureDetector(
                       child: InputDecorator(
                         decoration: InputDecoration(
                           border: InputBorder.none,
-                          labelText: 'Sleep duration',
-                          hintText: 'Nanana',
                           icon: Icon(
                             FontAwesomeIcons.clock,
                             color: Colors.blue.shade900,
+                            size: 30,
                           ),
                         ),
                       ),
@@ -175,7 +207,7 @@ class _AddSleepPageState extends State<AddSleepPage> {
                     ),
                   ),
                   SizedBox(
-                    height: 20,
+                    height: 35,
                     width: double.infinity,
                     child: Divider(
                       thickness: 1,
@@ -192,6 +224,7 @@ class _AddSleepPageState extends State<AddSleepPage> {
                     ? '$_hours hours $_minutes min'
                     : null;
                 if (sleepDuration != null && sleepType != null) {
+                  print('jestem tu');
                   tracker.addSleep(
                     Sleep(
                       length: sleepDuration.toString(),
@@ -199,11 +232,12 @@ class _AddSleepPageState extends State<AddSleepPage> {
                       category: sleepType,
                     ),
                   );
-                  Navigator.push(
+                  Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(
                       builder: (context) => LandingPage(sleepRecords),
                     ),
+                    (Route<dynamic> route) => false,
                   );
                 } else {
                   showDialog(context);
