@@ -205,6 +205,7 @@ class _AddSleepPageState extends State<AddSleepPage> {
                           controller: _sleepDurationController,
                           obscureText: false,
                           decoration: InputDecoration(
+                            hintText: '-',
                             border: InputBorder.none,
                             icon: Icon(
                               FontAwesomeIcons.clock,
@@ -237,7 +238,6 @@ class _AddSleepPageState extends State<AddSleepPage> {
                     ? '$_hours hours $_minutes min'
                     : null;
                 if (sleepDuration != null && sleepType != null) {
-                  print('jestem tu');
                   tracker.addSleep(
                     Sleep(
                       length: sleepDuration.toString(),
