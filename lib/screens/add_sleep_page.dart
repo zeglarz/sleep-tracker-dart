@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_picker/flutter_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:sleeptracker/components/main_button.dart';
 import 'package:sleeptracker/components/sleep.dart';
 import 'package:sleeptracker/components/sleep_tracker.dart';
@@ -16,10 +17,6 @@ SleepRecords tracker = SleepRecords();
 List<Sleep> sleepRecords = tracker.getSleepItems();
 
 class _AddSleepPageState extends State<AddSleepPage> {
-  String _myActivity;
-  String _myActivityResult;
-  final formKey = new GlobalKey<FormState>();
-
   final TextEditingController _dateController = new TextEditingController();
   String currDate =
       DateFormat("d MMMM yyyy, H:mm").format(DateTime.now()).toUpperCase();
@@ -27,14 +24,27 @@ class _AddSleepPageState extends State<AddSleepPage> {
 
   final String getUsTime = DateFormat.jm().format(DateTime.now()).toUpperCase();
 
-  _saveForm() {
-    var form = formKey.currentState;
-    if (form.validate()) {
-      form.save();
-      setState(() {
-        _myActivityResult = _myActivity;
-      });
-    }
+  showDialog(context) {
+    Alert(
+        context: context,
+        title: 'Fields empty',
+        type: AlertType.warning,
+        desc: 'Please make sure you filled all neccessary sleep details',
+        buttons: [
+          DialogButton(
+            child: Text(
+              "Dismiss",
+              style: TextStyle(color: Colors.white, fontSize: 20),
+            ),
+            onPressed: () => Navigator.pop(context),
+            color: Colors.red,
+          ),
+        ],
+        style: AlertStyle(
+          titleStyle: TextStyle(
+              fontWeight: FontWeight.bold, color: Colors.red, fontSize: 32.0),
+          descStyle: TextStyle(fontWeight: FontWeight.w200),
+        )).show();
   }
 
   int _hours;
@@ -61,20 +71,14 @@ class _AddSleepPageState extends State<AddSleepPage> {
 
   @override
   void initState() {
-    _myActivity = '';
-    _myActivityResult = '';
     _dateController.text = currDate;
     return super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    String sleepDuration =
-        _hours != null && _minutes != null ? '$_hours:$_minutes' : null;
-
     print(_hours);
     print(sleepType);
-    print(sleepDuration);
 
     return Scaffold(
         appBar: AppBar(
@@ -123,20 +127,21 @@ class _AddSleepPageState extends State<AddSleepPage> {
             Center(
                 child: GestureDetector(
               child: InputDecorator(
-                decoration: InputDecoration(labelText: 'Sleep duration'),
+                decoration: InputDecoration(
+                  labelText: 'Sleep duration',
+                ),
               ),
               onTap: () {
                 showPickerArray(context);
               },
             )),
-            Container(
-              padding: EdgeInsets.all(16),
-              child: Text(_myActivityResult),
-            ),
             MainButton(
               title: 'Save',
               onTap: () {
-                setState(() {
+                String sleepDuration = _hours != null && _minutes != null
+                    ? '$_hours hours $_minutes min'
+                    : null;
+                if (sleepDuration != null && sleepType != null) {
                   tracker.addSleep(
                     Sleep(
                       length: sleepDuration.toString(),
@@ -144,13 +149,15 @@ class _AddSleepPageState extends State<AddSleepPage> {
                       category: sleepType,
                     ),
                   );
-                });
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => LandingPage(sleepRecords),
-                  ),
-                );
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => LandingPage(sleepRecords),
+                    ),
+                  );
+                } else {
+                  showDialog(context);
+                }
               },
             )
           ],

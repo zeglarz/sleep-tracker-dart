@@ -29,26 +29,31 @@ class LandingPage extends StatelessWidget {
         ),
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Container(
-            margin: EdgeInsets.only(top: 30, bottom: 15),
-            height: 40,
-            width: 40,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(50),
-              color: Colors.amber,
-            ),
-            child: Icon(
-              FontAwesomeIcons.moon,
-              color: Colors.white,
-              size: 20,
+          Center(
+            child: Container(
+              margin: EdgeInsets.only(top: 30, bottom: 15),
+              height: 40,
+              width: 40,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(50),
+                color: Colors.amber,
+              ),
+              child: Icon(
+                FontAwesomeIcons.moon,
+                color: Colors.white,
+                size: 20,
+              ),
             ),
           ),
-          Container(
-            padding: EdgeInsets.only(top: 5, bottom: 15),
-            child: Text(
-              'Get to know your baby\'s sleep patterns and keep \n track of how much sleep they are getting here.',
-              textAlign: TextAlign.center,
+          Center(
+            child: Container(
+              padding: EdgeInsets.only(top: 5, bottom: 15),
+              child: Text(
+                'Get to know your baby\'s sleep patterns and keep \n track of how much sleep they are getting here.',
+                textAlign: TextAlign.center,
+              ),
             ),
           ),
           MainButton(
@@ -56,9 +61,16 @@ class LandingPage extends StatelessWidget {
             onTap: () => Navigator.push(context,
                 MaterialPageRoute(builder: (context) => AddSleepPage())),
           ),
+          SizedBox(height: 30),
           Container(
-            child: Text('$currDate'),
+            padding: EdgeInsets.only(left: 15),
+            child: Text('$currDate',
+                style: TextStyle(
+                    fontSize: 17.0,
+                    color: Colors.grey.shade800,
+                    fontWeight: FontWeight.bold)),
           ),
+          SizedBox(height: 15),
           Container(
             child: Column(
                 children: sleepRecords

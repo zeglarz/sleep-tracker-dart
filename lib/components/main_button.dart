@@ -24,7 +24,7 @@ class MainButton extends StatelessWidget {
         child: Center(
             child: Text(
           '$title',
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.white, fontSize: 18),
         )),
       ),
     );
