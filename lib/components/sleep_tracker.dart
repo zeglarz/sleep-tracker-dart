@@ -26,7 +26,7 @@ class SleepRecords {
   ];
 
   void addSleep(Sleep sleep) {
-    _sleepTracker.add(sleep);
+    _sleepTracker.insert(0, sleep);
     int lng = _sleepTracker.length;
   }
 

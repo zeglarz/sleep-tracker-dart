@@ -19,6 +19,8 @@ List<Sleep> sleepRecords = tracker.getSleepItems();
 
 class _AddSleepPageState extends State<AddSleepPage> {
   final TextEditingController _dateController = new TextEditingController();
+  final TextEditingController _sleepDurationController =
+      new TextEditingController();
   String currDate =
       DateFormat("d MMMM yyyy, H:mm").format(DateTime.now()).toUpperCase();
   final TextEditingController _lastNameController = new TextEditingController();
@@ -68,12 +70,18 @@ class _AddSleepPageState extends State<AddSleepPage> {
         onConfirm: (Picker picker, List value) {
           _hours = int.parse(picker.getSelectedValues()[0]);
           _minutes = int.parse(picker.getSelectedValues()[1]);
+          setState(() {
+            _sleepDurationController.text = _hours != null && _minutes != null
+                ? '$_hours hours $_minutes min'
+                : null;
+          });
         }).showDialog(context);
   }
 
   @override
   void initState() {
     _dateController.text = currDate;
+
     return super.initState();
   }
 
@@ -191,13 +199,18 @@ class _AddSleepPageState extends State<AddSleepPage> {
                   ),
                   Center(
                     child: GestureDetector(
-                      child: InputDecorator(
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          icon: Icon(
-                            FontAwesomeIcons.clock,
-                            color: Colors.blue.shade900,
-                            size: 30,
+                      child: AbsorbPointer(
+                        child: TextField(
+                          enabled: false,
+                          controller: _sleepDurationController,
+                          obscureText: false,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            icon: Icon(
+                              FontAwesomeIcons.clock,
+                              color: Colors.blue.shade900,
+                              size: 30,
+                            ),
                           ),
                         ),
                       ),
