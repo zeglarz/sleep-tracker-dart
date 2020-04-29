@@ -11,8 +11,6 @@ void main() => runApp(SleepTracker());
 class SleepTracker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    print(tracker.getSleepItems());
-
     return MaterialApp(
       home: LandingPage(sleepRecords),
     );

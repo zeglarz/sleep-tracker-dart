@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_picker/flutter_picker.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:sleeptracker/components/main_button.dart';
@@ -60,7 +61,8 @@ class _AddSleepPageState extends State<AddSleepPage> {
           children: <Widget>[
             Text("How long have your child slept?"),
             SizedBox(height: 30),
-            Text("Hours               Minutes"),
+            Text("Hours               Minutes",
+                style: TextStyle(fontWeight: FontWeight.bold)),
           ],
         ),
         onConfirm: (Picker picker, List value) {
@@ -77,9 +79,6 @@ class _AddSleepPageState extends State<AddSleepPage> {
 
   @override
   Widget build(BuildContext context) {
-    print(_hours);
-    print(sleepType);
-
     return Scaffold(
         appBar: AppBar(
           title: Text('Sleep Tracker'),
@@ -102,39 +101,90 @@ class _AddSleepPageState extends State<AddSleepPage> {
                 child: Image.asset('images/baby.jpg'),
               ),
             ),
-            Container(
-              child: TextField(
-                enabled: false,
-                controller: _dateController,
-                obscureText: false,
-                decoration: InputDecoration(
-                  labelText: 'Date and time',
-                ),
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 25.0, vertical: 16.0),
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    child: TextField(
+                      enabled: false,
+                      controller: _dateController,
+                      obscureText: false,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        labelText: 'Date and time',
+                        icon: Icon(
+                          FontAwesomeIcons.calendarAlt,
+                          color: Colors.blue.shade900,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                    width: double.infinity,
+                    child: Divider(
+                      thickness: 1,
+                      color: Colors.grey.shade400,
+                    ),
+                  ),
+                  DropdownButtonFormField(
+                    onChanged: (value) {
+                      setState(() => sleepType = value);
+                    },
+                    items: dropdownItems
+                        .map((value) =>
+                            DropdownMenuItem(child: Text(value), value: value))
+                        .toList(),
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      labelText: 'Sleep Type',
+                      labelStyle: TextStyle(fontSize: 12),
+                      hintText: 'Nights, nap, etc',
+                      icon: Icon(
+                        FontAwesomeIcons.moon,
+                        color: Colors.blue.shade900,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                    width: double.infinity,
+                    child: Divider(
+                      thickness: 1,
+                      color: Colors.grey.shade400,
+                    ),
+                  ),
+                  Center(
+                    child: GestureDetector(
+                      child: InputDecorator(
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          labelText: 'Sleep duration',
+                          hintText: 'Nanana',
+                          icon: Icon(
+                            FontAwesomeIcons.clock,
+                            color: Colors.blue.shade900,
+                          ),
+                        ),
+                      ),
+                      onTap: () {
+                        showPickerArray(context);
+                      },
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                    width: double.infinity,
+                    child: Divider(
+                      thickness: 1,
+                      color: Colors.grey.shade400,
+                    ),
+                  ),
+                ],
               ),
             ),
-            DropdownButtonFormField(
-              onChanged: (value) {
-                setState(() => sleepType = value);
-              },
-              items: dropdownItems
-                  .map((value) =>
-                      DropdownMenuItem(child: Text(value), value: value))
-                  .toList(),
-              decoration: InputDecoration(
-                labelText: 'Sleep Type',
-              ),
-            ),
-            Center(
-                child: GestureDetector(
-              child: InputDecorator(
-                decoration: InputDecoration(
-                  labelText: 'Sleep duration',
-                ),
-              ),
-              onTap: () {
-                showPickerArray(context);
-              },
-            )),
             MainButton(
               title: 'Save',
               onTap: () {

@@ -71,14 +71,19 @@ class LandingPage extends StatelessWidget {
                     fontWeight: FontWeight.bold)),
           ),
           SizedBox(height: 15),
-          Container(
-            child: Column(
-                children: sleepRecords
-                    .map((item) => SleepRecordWidget(
-                        sleepTime: item.time,
-                        sleepType: item.category,
-                        sleepDuration: item.length))
-                    .toList()),
+          Expanded(
+            child: Container(
+                child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: sleepRecords.length,
+                    itemBuilder: (context, index) {
+                      return sleepRecords
+                          .map((item) => SleepRecordWidget(
+                              sleepTime: item.time,
+                              sleepType: item.category,
+                              sleepDuration: item.length))
+                          .toList()[index];
+                    })),
           )
         ],
       ),

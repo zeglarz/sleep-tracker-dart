@@ -41,12 +41,14 @@ class SleepRecordWidget extends StatelessWidget {
               children: <Widget>[
                 Text(sleepType,
                     style: TextStyle(
+                        letterSpacing: 1.3,
                         fontSize: 16.0,
                         color: Colors.blue.shade900,
                         fontWeight: FontWeight.bold)),
                 SizedBox(height: 5),
                 Text(sleepDuration,
                     style: TextStyle(
+                        letterSpacing: 1.3,
                         fontSize: 14.0,
                         color: Colors.grey.shade700,
                         fontWeight: FontWeight.w400)),
