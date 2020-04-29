@@ -4,26 +4,13 @@ import 'package:intl/intl.dart';
 import 'package:sleeptracker/components/main_button.dart';
 import 'package:sleeptracker/components/sleep.dart';
 import 'package:sleeptracker/components/sleep_record_widget.dart';
-import 'package:sleeptracker/components/sleep_tracker.dart';
 
 import 'add_sleep_page.dart';
 
-SleepTracker tracker = SleepTracker();
+class LandingPage extends StatelessWidget {
+  LandingPage(this.sleepRecords);
+  List<Sleep> sleepRecords;
 
-List<Sleep> sleepRecords = tracker.getSleepItems();
-List<SleepRecordWidget> newList = sleepRecords
-    .map((item) => SleepRecordWidget(
-        sleepTime: item.time,
-        sleepType: item.category,
-        sleepDuration: item.length))
-    .toList();
-
-class LandingPage extends StatefulWidget {
-  @override
-  _LandingPageState createState() => _LandingPageState();
-}
-
-class _LandingPageState extends State<LandingPage> {
   String currDate =
       DateFormat("EEEE, d MMM yyyy").format(DateTime.now()).toUpperCase();
   @override
@@ -73,7 +60,13 @@ class _LandingPageState extends State<LandingPage> {
             child: Text('$currDate'),
           ),
           Container(
-            child: Column(children: newList),
+            child: Column(
+                children: sleepRecords
+                    .map((item) => SleepRecordWidget(
+                        sleepTime: item.time,
+                        sleepType: item.category,
+                        sleepDuration: item.length))
+                    .toList()),
           )
         ],
       ),
