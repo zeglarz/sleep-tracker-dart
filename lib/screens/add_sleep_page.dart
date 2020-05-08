@@ -106,7 +106,8 @@ class _AddSleepPageState extends State<AddSleepPage> {
               padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 14.0),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(15.0),
-                child: Image.asset('images/baby.jpg'),
+                child: Material(
+                    elevation: 30, child: Image.asset('images/baby.jpg')),
               ),
             ),
             Padding(
