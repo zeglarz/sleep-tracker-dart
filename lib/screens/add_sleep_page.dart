@@ -104,15 +104,30 @@ class _AddSleepPageState extends State<AddSleepPage> {
           children: <Widget>[
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 14.0),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(15.0),
-                child: Material(
-                    elevation: 30, child: Image.asset('images/baby.jpg')),
+              child: Card(
+                elevation: 20,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: Material(
+                    elevation: 10,
+                    child: Container(
+                      height: 200,
+                      width: double.infinity,
+                      child: Image.asset(
+                        'images/baby.jpg',
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                ),
               ),
             ),
             Padding(
               padding:
-                  const EdgeInsets.symmetric(horizontal: 25.0, vertical: 16.0),
+                  const EdgeInsets.symmetric(horizontal: 25.0, vertical: 5.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -141,7 +156,7 @@ class _AddSleepPageState extends State<AddSleepPage> {
                     ),
                   ),
                   SizedBox(
-                    height: 35,
+                    height: 20,
                     width: double.infinity,
                     child: Divider(
                       thickness: 1,
@@ -180,7 +195,7 @@ class _AddSleepPageState extends State<AddSleepPage> {
                     ),
                   ),
                   SizedBox(
-                    height: 35,
+                    height: 20,
                     width: double.infinity,
                     child: Divider(
                       thickness: 1,
@@ -222,7 +237,7 @@ class _AddSleepPageState extends State<AddSleepPage> {
                     ),
                   ),
                   SizedBox(
-                    height: 35,
+                    height: 20,
                     width: double.infinity,
                     child: Divider(
                       thickness: 1,
